@@ -1,7 +1,6 @@
 package users_pg
 
 import (
-	"strings"
 	"todo-app/entity"
 	"todo-app/pkg/errs"
 	"todo-app/repo/users_repo"
@@ -23,7 +22,7 @@ func (pg *usersPg) Add(user *entity.User) errs.Error {
 	tx := pg.db.Begin()
 
 	if err := tx.Create(user).Error; err != nil {
-		if strings.Contains(err.Error(), "duplicate key value violates unique constraint") {
+		if err == gorm.ErrDuplicatedKey {
 			tx.Rollback()
 			return errs.NewConflictError("email has been used")
 		}
