@@ -1,8 +1,10 @@
 package auth_service
 
 import (
+	"strconv"
 	"todo-app/entity"
 	"todo-app/pkg/errs"
+	"todo-app/repo/todos_repo"
 	"todo-app/repo/users_repo"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,14 +12,16 @@ import (
 
 type authService struct {
 	ur users_repo.UsersRepo
+	tr todos_repo.TodoRepo
 }
 
 type AuthService interface {
 	Authentication() fiber.Handler
+	Authorization() fiber.Handler
 }
 
-func NewAuthService(userRepo users_repo.UsersRepo) AuthService {
-	return &authService{ur: userRepo}
+func NewAuthService(userRepo users_repo.UsersRepo, todoRepo todos_repo.TodoRepo) AuthService {
+	return &authService{ur: userRepo, tr: todoRepo}
 }
 
 // Authentication implements AuthService.
@@ -41,6 +45,28 @@ func (as *authService) Authentication() fiber.Handler {
 		}
 
 		c.Locals("user", user)
+
+		return c.Next()
+	}
+}
+
+// Authorization implements AuthService.
+func (as *authService) Authorization() fiber.Handler {
+	return func(c *fiber.Ctx) error {
+
+		user := c.Locals("user").(entity.User)
+		todoId, _ := strconv.Atoi(c.Params("todoId"))
+
+		t, err := as.tr.Detail(uint(todoId))
+
+		if err != nil {
+			return c.Status(err.Status()).JSON(err)
+		}
+
+		if t.UserID != user.ID {
+			errUnauthorizedError := errs.NewUnathorizedError("you're not authorized to access this todo")
+			return c.Status(errUnauthorizedError.Status()).JSON(errUnauthorizedError)
+		}
 
 		return c.Next()
 	}

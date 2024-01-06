@@ -7,6 +7,7 @@ type authMock struct {
 
 var (
 	Authentication func() fiber.Handler
+	Authorization  func() fiber.Handler
 )
 
 func NewAuthMock() AuthService {
@@ -16,4 +17,9 @@ func NewAuthMock() AuthService {
 // Authentication implements AuthService.
 func (a *authMock) Authentication() fiber.Handler {
 	return Authentication()
+}
+
+// Authorization implements AuthService.
+func (a *authMock) Authorization() fiber.Handler {
+	return Authorization()
 }
