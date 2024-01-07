@@ -5,6 +5,7 @@ import (
 	"todo-app/dto"
 	"todo-app/entity"
 	"todo-app/pkg/errs"
+	"todo-app/pkg/helper"
 	"todo-app/service/todos_service"
 
 	"github.com/gofiber/fiber/v2"
@@ -34,6 +35,10 @@ func (th *todoHandler) Add(c *fiber.Ctx) error {
 	if err := c.BodyParser(payload); err != nil {
 		invalidJson := errs.NewUnprocessableEntityError("invalid JSON body request")
 		return c.Status(invalidJson.Status()).JSON(invalidJson)
+	}
+
+	if err := helper.ValidateStruct(payload); err != nil {
+		return c.Status(err.Status()).JSON(err)
 	}
 
 	tr, err := th.ts.Add(user.ID, payload)
@@ -95,6 +100,10 @@ func (th *todoHandler) Modify(c *fiber.Ctx) error {
 	if err := c.BodyParser(payload); err != nil {
 		invalidJson := errs.NewUnprocessableEntityError("invalid JSON body request")
 		return c.Status(invalidJson.Status()).JSON(invalidJson)
+	}
+
+	if err := helper.ValidateStruct(payload); err != nil {
+		return c.Status(err.Status()).JSON(err)
 	}
 
 	tr, err := th.ts.Modify(uint(todoId), payload)
