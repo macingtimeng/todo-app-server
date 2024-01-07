@@ -2,9 +2,9 @@
 Save your notes with TodoKu
 
 # Demo
-- [Swagger]()
-- [API]()
-- [Demo](http://todoku.netlify.app/)
+- [Swagger(Soon)]()
+- [API(Soon)]()
+- [Demo(Alpha Version)](http://todoku.netlify.app/)
 
 # Schema
 | Domain       | Method   | Endpoint                     | Middleware                     | Description          |
