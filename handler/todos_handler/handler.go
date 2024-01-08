@@ -28,6 +28,16 @@ func NewTodoHandler(todoService todos_service.TodoService) TodoHandler {
 }
 
 // Add implements TodoHandler.
+// Add godoc
+// @Summary Add todo
+// @Description Add todo request
+// @Tags Todos
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Param dto.AddTodo body dto.AddTodo true "body request for add todo"
+// @Success 201 {object} dto.TodoResponse
+// @Router /todos [post]
 func (th *todoHandler) Add(c *fiber.Ctx) error {
 	payload := &dto.AddTodo{}
 	user := c.Locals("user").(entity.User)
@@ -51,6 +61,16 @@ func (th *todoHandler) Add(c *fiber.Ctx) error {
 }
 
 // Delete implements TodoHandler.
+// Delete godoc
+// @Summary Delete todo
+// @Description Delete todo request
+// @Tags Todos
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Param todoId path int true "todo id"
+// @Success 200 {object} dto.TodoResponse
+// @Router /todos/{todoId} [delete]
 func (th *todoHandler) Delete(c *fiber.Ctx) error {
 
 	todoId, _ := strconv.Atoi(c.Params("todoId"))
@@ -65,6 +85,16 @@ func (th *todoHandler) Delete(c *fiber.Ctx) error {
 }
 
 // Detail implements TodoHandler.
+// Detail godoc
+// @Summary Detail todo
+// @Description Detail todo request
+// @Tags Todos
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Param todoId path int true "todo id"
+// @Success 200 {object} dto.TodoResponse
+// @Router /todos/{todoId} [get]
 func (th *todoHandler) Detail(c *fiber.Ctx) error {
 
 	todoId, _ := strconv.Atoi(c.Params("todoId"))
@@ -79,6 +109,15 @@ func (th *todoHandler) Detail(c *fiber.Ctx) error {
 }
 
 // Fetch implements TodoHandler.
+// Fetch godoc
+// @Summary Get all todos
+// @Description Get all todos request
+// @Tags Todos
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Success 200 {object} dto.TodoResponse
+// @Router /todos/ [get]
 func (th *todoHandler) Fetch(c *fiber.Ctx) error {
 
 	user := c.Locals("user").(entity.User)
@@ -93,6 +132,17 @@ func (th *todoHandler) Fetch(c *fiber.Ctx) error {
 }
 
 // Modify implements TodoHandler.
+// Modify godoc
+// @Summary Modify todo
+// @Description Modify todo request
+// @Tags Todos
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Param todoId path int true "todo id"
+// @Param dto.ModifyTodo body dto.ModifyTodo true "body request for modify todo"
+// @Success 200 {object} dto.TodoResponse
+// @Router /todos/{todoId} [patch]
 func (th *todoHandler) Modify(c *fiber.Ctx) error {
 	payload := &dto.ModifyTodo{}
 	todoId, _ := strconv.Atoi(c.Params("todoId"))

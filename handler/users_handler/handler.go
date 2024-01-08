@@ -6,6 +6,7 @@ import (
 	"todo-app/pkg/errs"
 	"todo-app/pkg/helper"
 	"todo-app/service/users_service"
+	_ "todo-app/docs"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -26,6 +27,15 @@ func NewUserHandler(userService users_service.UserService) UserHandler {
 }
 
 // Login implements UserHandler.
+// Login godoc
+// @Summary User login
+// @Description User login request
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param dto.Login body dto.Login true "body request for user login"
+// @Success 200 {object} dto.UserResponse
+// @Router /users/login [post]
 func (uh *userHandler) Login(c *fiber.Ctx) error {
 	payload := &dto.Login{}
 
@@ -50,6 +60,15 @@ func (uh *userHandler) Login(c *fiber.Ctx) error {
 }
 
 // Modify implements UserHandler.
+// Modify godoc
+// @Summary User modify
+// @Description User modify request
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param dto.Modify body dto.Modify true "body request for user modify"
+// @Success 200 {object} dto.UserResponse
+// @Router /users/modify [patch]
 func (uh *userHandler) Modify(c *fiber.Ctx) error {
 	payload := &dto.Modify{}
 	user := c.Locals("user").(entity.User)
@@ -75,6 +94,15 @@ func (uh *userHandler) Modify(c *fiber.Ctx) error {
 }
 
 // Profile implements UserHandler.
+// Profile godoc
+// @Summary User profile
+// @Description User profile request
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer Token"
+// @Success 200 {object} dto.UserResponse
+// @Router /users/profile [get]
 func (uh *userHandler) Profile(c *fiber.Ctx) error {
 	user := c.Locals("user").(entity.User)
 
@@ -88,6 +116,15 @@ func (uh *userHandler) Profile(c *fiber.Ctx) error {
 }
 
 // Register implements UserHandler.
+// Register godoc
+// @Summary User register
+// @Description User register request
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param dto.Register body dto.Register true "body request for user register"
+// @Success 201 {object} dto.UserResponse
+// @Router /users/register [post]
 func (uh *userHandler) Register(c *fiber.Ctx) error {
 	payload := &dto.Register{}
 
