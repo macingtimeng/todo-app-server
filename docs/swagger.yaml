@@ -1,0 +1,280 @@
+basePath: /api/v1/
+definitions:
+  dto.AddTodo:
+    properties:
+      todos:
+        type: string
+    type: object
+  dto.Login:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.Modify:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+    type: object
+  dto.ModifyTodo:
+    properties:
+      status:
+        type: boolean
+      todos:
+        type: string
+    type: object
+  dto.Register:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.TodoResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  dto.UserResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: yusrililham62@gmail.com
+    name: Yusril Ilham Kholid
+    url: https://yusrililhm.netlify.app
+  title: TodoKu API V1
+  version: "1.0"
+paths:
+  /todos:
+    post:
+      consumes:
+      - application/json
+      description: Add todo request
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: body request for add todo
+        in: body
+        name: dto.AddTodo
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AddTodo'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.TodoResponse'
+      summary: Add todo
+      tags:
+      - Todos
+  /todos/:
+    get:
+      consumes:
+      - application/json
+      description: Get all todos request
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TodoResponse'
+      summary: Get all todos
+      tags:
+      - Todos
+  /todos/{todoId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete todo request
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: todo id
+        in: path
+        name: todoId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TodoResponse'
+      summary: Delete todo
+      tags:
+      - Todos
+    get:
+      consumes:
+      - application/json
+      description: Detail todo request
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: todo id
+        in: path
+        name: todoId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TodoResponse'
+      summary: Detail todo
+      tags:
+      - Todos
+    patch:
+      consumes:
+      - application/json
+      description: Modify todo request
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: todo id
+        in: path
+        name: todoId
+        required: true
+        type: integer
+      - description: body request for modify todo
+        in: body
+        name: dto.ModifyTodo
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ModifyTodo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TodoResponse'
+      summary: Modify todo
+      tags:
+      - Todos
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: User login request
+      parameters:
+      - description: body request for user login
+        in: body
+        name: dto.Login
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserResponse'
+      summary: User login
+      tags:
+      - Users
+  /users/modify:
+    patch:
+      consumes:
+      - application/json
+      description: User modify request
+      parameters:
+      - description: body request for user modify
+        in: body
+        name: dto.Modify
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Modify'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserResponse'
+      summary: User modify
+      tags:
+      - Users
+  /users/profile:
+    get:
+      consumes:
+      - application/json
+      description: User profile request
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserResponse'
+      summary: User profile
+      tags:
+      - Users
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: User register request
+      parameters:
+      - description: body request for user register
+        in: body
+        name: dto.Register
+        required: true
+        schema:
+          $ref: '#/definitions/dto.Register'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.UserResponse'
+      summary: User register
+      tags:
+      - Users
+swagger: "2.0"
